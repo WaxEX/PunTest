@@ -3,7 +3,7 @@ using System.Collections;
 
 public class player : MonoBehaviour {
 
-	public int union = 0;
+	public int union = 1;
 	public int level = 1;
 
 	// Use this for initialization
@@ -32,9 +32,18 @@ public class player : MonoBehaviour {
 			GUILayout.EndVertical();
 		}
 		GUILayout.EndHorizontal();
-		GUILayout.EndArea();
-
+		GUILayout.EndArea(); 
 
 	}
+
+
+	public void setUnion(float val){
+		union = (int)val;
+	}
+
+	public void setLevel(float val){
+		level = (int)val;
+	}
+
 
 }
