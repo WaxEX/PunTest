@@ -3,9 +3,15 @@
 
 public class PhotonConnector : Photon.PunBehaviour {
 
+
+	private GameObject player;
+
+
 	// Use this for initialization
 	void Start () {
 		Debug.Log("Start");
+
+		player = GameObject.Find("player");
 
 		PhotonNetwork.ConnectUsingSettings("0.1");
 	}
@@ -17,7 +23,10 @@ public class PhotonConnector : Photon.PunBehaviour {
 
 		_loggingLobbyList ();
 
-		TypedLobby targetLobby = new TypedLobby("testLobby", LobbyType.Default); 
+
+		string lobby_name = "Union0"+player.GetComponent<player>().union;
+
+		TypedLobby targetLobby = new TypedLobby(lobby_name, LobbyType.Default); 
 		PhotonNetwork.JoinLobby(targetLobby);
 
 
@@ -47,7 +56,7 @@ public class PhotonConnector : Photon.PunBehaviour {
 	public void OnPhotonRandomJoinFailed()
 	{
 		Debug.Log("OnPhotonRandomJoinFailed");
-		PhotonNetwork.CreateRoom(null);
+		PhotonNetwork.CreateRoom("testRoom");
 	}
 
 	public override void OnJoinedRoom()
@@ -71,8 +80,11 @@ public class PhotonConnector : Photon.PunBehaviour {
 	public void OnGUI()
 	{
 		GUILayout.Label (PhotonNetwork.connectionStateDetailed.ToString ());
+
+		GUILayout.Label (PhotonNetwork.lobby.ToString ());
+
+		if(PhotonNetwork.room != null)GUILayout.Label (PhotonNetwork.room.ToString ());
 	}
-		
 
 // for DEBUG
 	private void _loggingLobbyList(){
