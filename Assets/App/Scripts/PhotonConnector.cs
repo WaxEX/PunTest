@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-// using System.Collections;
+using System;
+using System.Collections;
 
 public class PhotonConnector : Photon.PunBehaviour {
 
@@ -11,9 +12,9 @@ public class PhotonConnector : Photon.PunBehaviour {
 	void Start () {
 		Debug.Log("Start");
 
-		player = GameObject.Find("player");
+		player = GameObject.Find("Player");
 
-		PhotonNetwork.ConnectUsingSettings("0.1");
+		//PhotonNetwork.ConnectUsingSettings("0.1");
 	}
 
 	// when AutoJoinLobby is off, this method gets called when PUN finished the connection (instead of OnJoinedLobby())
@@ -22,7 +23,6 @@ public class PhotonConnector : Photon.PunBehaviour {
 		Debug.Log("OnConnectedToMaster");
 
 		_loggingLobbyList ();
-
 
 		string lobby_name = "Union0"+player.GetComponent<player>().union;
 
@@ -49,14 +49,32 @@ public class PhotonConnector : Photon.PunBehaviour {
 
 		if(PhotonNetwork.room != null) Debug.Log(PhotonNetwork.room.ToString());
 
-		PhotonNetwork.JoinRandomRoom();
+		byte maxMem = 0;
+
+		ExitGames.Client.Photon.Hashtable prop = new ExitGames.Client.Photon.Hashtable();
+		prop["LvZone"] = (int) player.GetComponent<player>().level /10;
+
+		PhotonNetwork.JoinRandomRoom(prop, maxMem);
 	}
 
 
 	public void OnPhotonRandomJoinFailed()
 	{
 		Debug.Log("OnPhotonRandomJoinFailed");
-		PhotonNetwork.CreateRoom("testRoom");
+
+
+		ExitGames.Client.Photon.Hashtable prop = new ExitGames.Client.Photon.Hashtable();
+		prop["LvZone"] = (int) player.GetComponent<player>().level /10;
+
+		RoomOptions option = new RoomOptions();
+		option.maxPlayers = 0;
+		option.CustomRoomProperties = prop;
+
+		PhotonNetwork.CreateRoom(
+			null,
+			option,
+			null
+		);
 	}
 
 	public override void OnJoinedRoom()
@@ -81,10 +99,27 @@ public class PhotonConnector : Photon.PunBehaviour {
 	{
 		GUILayout.Label (PhotonNetwork.connectionStateDetailed.ToString ());
 
-		GUILayout.Label (PhotonNetwork.lobby.ToString ());
+		//GUILayout.Label (PhotonNetwork.lobby.ToString ());
 
-		if(PhotonNetwork.room != null)GUILayout.Label (PhotonNetwork.room.ToString ());
+		//if(PhotonNetwork.room != null)GUILayout.Label (PhotonNetwork.room.ToString ());
 	}
+
+
+	// ボタンアタッチとかで起動。ROOMに入る
+//	public void JoinRoom(){
+
+//		Debug.Log("tryJoinRoom");
+
+	//	byte maxMem = 0;
+	
+	//	ExitGames.Client.Photon.Hashtable prop = new ExitGames.Client.Photon.Hashtable();
+	//	prop["LvZone"] = (int) player.GetComponent<player>().level /10;
+
+	//	PhotonNetwork.JoinRandomRoom(prop, maxMem);
+//	}
+
+
+
 
 // for DEBUG
 	private void _loggingLobbyList(){
