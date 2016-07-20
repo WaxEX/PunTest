@@ -4,7 +4,6 @@
 [Oo]bj/
 UnityGenerated/
 ProjectSettings/*.asset
-
 # ----[ Visual Studio / MonoDevelop generated ]------- #
 
 ExportedObj/
@@ -37,3 +36,6 @@ Thumbs.db
 
 # use in assets
 !*.obj
+
+# -------------[ CUSTOM ]------------------------ #
+Build/
