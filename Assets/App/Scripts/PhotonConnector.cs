@@ -92,7 +92,7 @@ public class PhotonConnector : Photon.PunBehaviour {
 		RoomOptions option = new RoomOptions();
 		option.IsVisible  = true;
 		option.IsOpen     = true;
-		option.maxPlayers = 3;
+		option.MaxPlayers = 3;
 
 		option.CustomRoomProperties = getRoomProperties();
 		option.customRoomPropertiesForLobby = new string[] {"LvZone"};
