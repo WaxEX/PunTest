@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class player : MonoBehaviour {
-
+public class player : Photon.MonoBehaviour
+{
 	public int union = 1;
 	public int level = 1;
 

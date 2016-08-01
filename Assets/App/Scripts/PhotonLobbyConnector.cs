@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 
-public class PhotonConnector : Photon.PunBehaviour {
+public class PhotonLobbyConnector : Photon.PunBehaviour {
 
 
 	private GameObject player;
@@ -75,6 +76,11 @@ public class PhotonConnector : Photon.PunBehaviour {
 		
 	public override void OnJoinedRoom(){
 		Debug.Log("OnJoinedRoom");
+
+
+		// Scene移動
+		SceneManager.LoadScene("Game");
+
 	}
 
 	private TypedLobby getLobbyInfo(){
@@ -95,11 +101,14 @@ public class PhotonConnector : Photon.PunBehaviour {
 		option.MaxPlayers = 3;
 
 		option.CustomRoomProperties = getRoomProperties();
-		option.customRoomPropertiesForLobby = new string[] {"LvZone"};
+		option.CustomRoomPropertiesForLobby = new string[] {"LvZone"};
 
 		return option;
 	}
-		
+
+
+
+
 
 /*********************************************************************
  * for DEBUG
