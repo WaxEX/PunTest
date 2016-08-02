@@ -20,6 +20,9 @@ public class PhotonLobbyConnector : Photon.PunBehaviour {
 
 		Debug.Log("Start");
 
+		// シーン同期もする
+		PhotonNetwork.automaticallySyncScene = true;
+
 		PhotonNetwork.ConnectUsingSettings("0.1");
 	}
 
@@ -79,7 +82,9 @@ public class PhotonLobbyConnector : Photon.PunBehaviour {
 
 
 		// Scene移動
-		SceneManager.LoadScene("Game");
+		Application.LoadLevel("Game");
+
+		//SceneManager.LoadScene("Game");
 
 	}
 

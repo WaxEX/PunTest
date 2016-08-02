@@ -6,14 +6,31 @@ public class player : Photon.MonoBehaviour
 	public int union = 1;
 	public int level = 1;
 
+	private Rigidbody rigidBody;
+
 	// Use this for initialization
 	void Start () {
-	
+		rigidBody = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void FixedUpdate() {
+
+		// 自分以外は動かさない
+		if (!photonView.isMine) return;
+
+		float newX = Input.GetAxis("Horizontal") *2.0f;
+		float newZ = Input.GetAxis("Vertical") *2.0f;
+		float newY = Input.GetButtonDown("Jump") ? 5.0f : 0;
+
+		if(newX == 0 || newY == 0 || newZ == 0){
+			if(newY == 0) newY = rigidBody.velocity.y;
+			rigidBody.velocity = new Vector3 (newX, newY, newZ);
+		}
 	}
 
 	public void OnGUI()
